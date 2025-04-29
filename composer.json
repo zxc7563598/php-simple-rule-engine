@@ -1,0 +1,21 @@
+{
+  "name": "hejunjie/simple-rule-engine",
+  "description": "一个轻量、易用的 PHP 规则引擎，支持多条件组合、动态规则执行，适合业务规则判断、数据校验等场景。",
+  "license": "MIT",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Hejunjie\\SimpleRuleEngine\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "何俊杰",
+      "email": "junjie.he.925@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "nesbot/carbon": "^3.9"
+  }
+}

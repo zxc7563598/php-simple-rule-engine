@@ -1,4 +1,4 @@
-# hejunjiesimple-rule-engine
+# hejunjie/simple-rule-engine
 
 一个轻量、易用的 PHP 规则引擎，支持多条件组合与动态规则执行，适用于业务规则判断、数据校验等场景。
 

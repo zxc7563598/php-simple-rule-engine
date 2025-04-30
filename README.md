@@ -104,7 +104,7 @@ $details = Engine::evaluateWithDetails($rules, $data);
 实现 `OperatorInterface`​ 接口，并通过 `OperatorFactory`​ 注册：
 
 ```php
-use Hejunjie\SimpleRuleEngine\Operators\OperatorInterface;
+use Hejunjie\SimpleRuleEngine\Interface\OperatorInterface;
 use Hejunjie\SimpleRuleEngine\OperatorFactory;
 
 class CustomizeOperator implements OperatorInterface

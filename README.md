@@ -1,37 +1,42 @@
 # hejunjie/simple-rule-engine
 
-一个轻量、易用的 PHP 规则引擎，支持多条件组合与动态规则执行，适用于业务规则判断、数据校验等场景。
+<div align="center">
+  <a href="./README.md">English</a>｜<a href="./README.zh-CN.md">简体中文</a>
+  <hr width="50%"/>
+</div>
+
+A lightweight and flexible PHP rule engine supporting complex conditions and dynamic rule execution—ideal for business logic evaluation and data validation.
 
 ---
 
-## 🧠 用途 & 初衷
+## 🧠 Purpose & Intent
 
-日常写 PHP 的时候，我们经常会遇到一类“判断性”的业务逻辑，比如：
+When writing PHP on a daily basis, we often encounter "conditional" business logic, such as:
 
-- 某个用户是否符合某个条件？
-- 当前订单是否满足参加活动的资格？
-- 某条数据是否需要做进一步处理？
+- Does a certain user meet a specific condition?
+- Does the current order qualify for a promotional event?
+- Does a particular piece of data require further processing?
 
-这些逻辑写起来很简单，就是一个又一个的 if、and、or，但当你遇到 5 条、10 条甚至几十条判断条件混在一起逐渐变得越来越多....
+These types of logic are simple at first, just a series of if, and, or statements. But when you start dealing with 5, 10, or even dozens of conditions all tangled together, things can quickly get messy.
 
-一开始还能接受，后来每次加条件、改条件、删条件都像拆炸弹，别说别人接手了，连你自己两周后回来看都要皱眉。
+At first, it’s manageable, but after a while, adding, changing, or removing conditions starts to feel like defusing a bomb. Forget about handing it off to someone else – even you, two weeks later, will look at it and cringe.
 
-于是我花了一些时间，写了这个 PHP Composer 包，它的目标是：用更清晰、更灵活的方式去组织这些判断条件，让判断逻辑更结构化，也更容易复用。
-
----
-
-## ✨ 特点
-
-- **简单易用**：通过直观的 API 快速构建规则，支持 AND / OR 组合逻辑。
-- **高度可扩展**：内置常用操作符，支持自定义操作符注册机制，满足多样化业务需求。
-- **灵活的数据结构**：规则与数据解耦，支持数组、对象等多种数据形式。
-- **详细的规则评估**：可获取每条规则的评估结果，便于调试与日志记录。
+So, I spent some time developing this PHP Composer package with the goal of organizing these conditional checks in a clearer, more flexible way. The idea is to make the logic more structured and easier to reuse.
 
 ---
 
-## 📦 安装
+## ✨ Features
 
-使用 Composer 安装：
+- **Easy to Use**: Quickly build rules with an intuitive API, supporting AND/OR combination logic.
+- **Highly Extensible**: Includes common built-in operators and supports a custom operator registration mechanism to meet diverse business needs.
+- **Flexible Data Structures**: Decouples rules from data, supporting multiple data formats such as arrays and objects.
+- **Detailed Rule Evaluation**: Allows access to the evaluation results of each rule, making debugging and logging easier.
+
+---
+
+## 📦 Installation
+
+Install via Composer:
 
 ```bash
 composer require hejunjie/simple-rule-engine
@@ -39,67 +44,67 @@ composer require hejunjie/simple-rule-engine
 
 ---
 
-## 🛠️ 用法示例
+## 🛠️ Usage Examples
 
 ```php
 use Hejunjie\SimpleRuleEngine\Rule;
 use Hejunjie\SimpleRuleEngine\Engine;
 
-// 定义规则
+// Define Rules
 $rules = [
-    new Rule('age', '>=', 18, '年龄必须大于等于18岁'),
-    new Rule('country', '==', 'SG', '国家必须是新加坡'),
+    new Rule('age', '>=', 18, 'Age must be greater than or equal to 18'),
+    new Rule('country', '==', 'SG', 'Country must be Singapore'),
 ];
 
-// 待评估的数据
+// Data to be evaluated
 $data = [
     'age' => 20,
     'country' => 'SG',
 ];
 
-// 评估结果
-$result = Engine::evaluate($rules, $data, 'AND'); // 返回 true 或 false
+// Evaluation Result
+$result = Engine::evaluate($rules, $data, 'AND'); // Return true or false
 
-// 获取详细评估信息
+// Get Detailed Evaluation Information
 $details = Engine::evaluateWithDetails($rules, $data);
 /*
-返回示例：
+Return Example:
 [
-    ['description' => '年龄必须大于等于18岁', 'passed' => true],
-    ['description' => '国家必须是新加坡', 'passed' => true],
+    ['description' => 'Age must be greater than or equal to 18', 'passed' => true],
+    ['description' => 'Country must be Singapore', 'passed' => true],
 ]
 */
 ```
 
 ---
 
-## 🧩 内置操作符
+## 🧩 Built-in Operators
 
-| 操作符           | 描述             | 额外说明                         |
-| ---------------- | ---------------- | -------------------------------- |
-| ​`==`​           | 等于             | 无                               |
-| ​`!=`​           | 不等于           | 无                               |
-| ​`>`​            | 大于             | 无                               |
-| ​`>=`​           | 大于等于         | 无                               |
-| ​`<`​            | 小于             | 无                               |
-| ​`<=`​           | 小于等于         | 无                               |
-| ​`in`​           | 包含于集合中     | 数组：[内容 1,内容 2,...]        |
-| ​`not_in`​       | 不包含于集合中   | 数组：[内容 1,内容 2,...]        |
-| ​`contains`​     | 包含字符串       | 无                               |
-| ​`not_contains`​ | 不包含字符串     | 无                               |
-| ​`start_swith`​  | 以指定字符串开头 | 无                               |
-| ​`end_swith`​    | 以指定字符串结尾 | 无                               |
-| ​`between`​      | 在指定范围内     | 数组：[最大值,最小值]            |
-| ​`not_between`​  | 不在指定范围内   | 数组：[最大值,最小值]            |
-| ​`before_date`​  | 日期早于         | 任意常规日期格式，包括时间戳均可 |
-| ​`after_date`​   | 日期晚于         | 任意常规日期格式，包括时间戳均可 |
-| ​`date_equal`​   | 日期相等         | 任意常规日期格式，包括时间戳均可 |
+| Operator         | Description                | Additional Notes                                      |
+| ---------------- | -------------------------- | ----------------------------------------------------- |
+| ​`==`​           | Equal to                   | None                                                  |
+| ​`!=`​           | Not equal to               | None                                                  |
+| ​`>`​            | Greater than               | None                                                  |
+| ​`>=`​           | Greater than or equal to   | None                                                  |
+| ​`<`​            | Less than                  | None                                                  |
+| ​`<=`​           | Less than or equal to      | None                                                  |
+| ​`in`​           | In a set                   | Array: [item1, item2, ...]                            |
+| ​`not_in`​       | Not in a set               | Array: [item1, item2, ...]                            |
+| ​`contains`​     | Contains substring         | None                                                  |
+| ​`not_contains`​ | Does not contain substring | None                                                  |
+| ​`start_swith`​  | Starts with                | None                                                  |
+| ​`end_swith`​    | Ends with                  | None                                                  |
+| ​`between`​      | Within range               | Array: [min, max]                                     |
+| ​`not_between`​  | Outside range              | Array: [min, max]                                     |
+| ​`before_date`​  | Date is before             | Supports any common date format, including timestamps |
+| ​`after_date`​   | Date is after              | Supports any common date format, including timestamps |
+| ​`date_equal`​   | Date is equal to           | Supports any common date format, including timestamps |
 
-你也可以通过注册机制添加自定义操作符。
+You can also add custom operators through the registration mechanism.
 
 ---
 
-## 🔌 自定义操作符
+## 🔌 Custom Operators
 
 实现 `OperatorInterface`​ 接口，并通过 `OperatorFactory`​ 注册：
 
@@ -110,20 +115,20 @@ use Hejunjie\SimpleRuleEngine\OperatorFactory;
 class CustomizeOperator implements OperatorInterface
 {
     /**
-     * 评估方法
+     * Evaluation Method
      *
-     * @param mixed $fieldValue 用户输入数据
-     * @param mixed $ruleValue 对比数据
+     * @param mixed $fieldValue field Value
+     * @param mixed $ruleValue rule Value
      *
      * @return bool
      */
     public function evaluate(mixed $fieldValue, mixed $ruleValue): bool
     {
-        // TODO: 实现判断逻辑
+        // TODO: Implement the evaluation logic
     }
 
     /**
-     * 操作符名称
+     * Operator Name
      *
      * @return string
      */
@@ -133,13 +138,13 @@ class CustomizeOperator implements OperatorInterface
     }
 }
 
-// 注册自定义操作符 customize
+// Register custom operator with customize
 $factory = OperatorFactory::getInstance();
 $factory->register(new CustomizeOperator());
 
-// 可以在定义规则时使用 customize
+// You can use customize when defining rules
 $rules = [
-    new Rule('field', 'customize', 'value', '自定义规则描述'),
+    new Rule('field', 'customize', 'value', 'Custom rule description'),
     ...
     ...
 ];
@@ -148,43 +153,46 @@ $rules = [
 
 ---
 
-## 🎯 应用场景
+## 🎯 Use Cases
 
-- **表单数据验证**：根据用户输入动态验证字段值。
-- **业务规则判断**：如订单处理、权限控制等。
-- **数据过滤与筛选**：根据规则筛选符合条件的数据集。
-- **配置驱动的逻辑控制**：通过配置文件定义规则，实现灵活的业务逻辑。
+- **Form Data Validation**: Dynamically validate field values based on user input.
+- **Business Rule Evaluation**: Apply rules for scenarios like order processing, access control, etc.
+- **Data Filtering and Selection**: Filter datasets based on predefined rules.
+- **Config-Driven Logic Control**: Define rules via configuration files to enable flexible business logic.
 
 ---
 
-## 🔧 更多工具包（可独立使用，也可统一安装）
+## 🔧 Additional Toolkits (Can be used independently or installed together)
 
-本项目最初是从 [hejunjie/tools](https://github.com/zxc7563598/php-tools) 拆分而来，如果你想一次性安装所有功能组件，也可以使用统一包：
+This project was originally extracted from [hejunjie/tools](https://github.com/zxc7563598/php-tools).
+To install all features in one go, feel free to use the all-in-one package:
 
 ```bash
 composer require hejunjie/tools
 ```
 
-当然你也可以按需选择安装以下功能模块：
+Alternatively, feel free to install only the modules you need：
 
-[hejunjie/cache](https://github.com/zxc7563598/php-cache) - 多层缓存系统，基于装饰器模式。
+[hejunjie/utils](https://github.com/zxc7563598/php-utils) - A lightweight and practical PHP utility library that offers a collection of commonly used helper functions for files, strings, arrays, and HTTP requests—designed to streamline development and support everyday PHP projects.
 
-[hejunjie/china-division](https://github.com/zxc7563598/php-china-division) - 中国省市区划分数据包。
+[hejunjie/cache](https://github.com/zxc7563598/php-cache) - A layered caching system built with the decorator pattern. Supports combining memory, file, local, and remote caches to improve hit rates and simplify cache logic.
 
-[hejunjie/error-log](https://github.com/zxc7563598/php-error-log) - 责任链日志上报系统。
+[hejunjie/china-division](https://github.com/zxc7563598/php-china-division) - Regularly updated dataset of China's administrative divisions with ID-card address parsing. Distributed via Composer and versioned for use in forms, validation, and address-related features
 
-[hejunjie/utils](https://github.com/zxc7563598/php-utils) - 常用工具方法集合。
+[hejunjie/error-log](https://github.com/zxc7563598/php-error-log) - An error logging component using the Chain of Responsibility pattern. Supports multiple output channels like local files, remote APIs, and console logs—ideal for flexible and scalable logging strategies.
 
-[hejunjie/address-parser](https://github.com/zxc7563598/php-address-parser) - 收货地址智能解析工具，支持从非结构化文本中提取用户/地址信息。
+[hejunjie/mobile-locator](https://github.com/zxc7563598/php-mobile-locator) - A mobile number lookup library based on Chinese carrier rules. Identifies carriers and regions, suitable for registration checks, user profiling, and data archiving.
 
-[hejunjie/mobile-locator](https://github.com/zxc7563598/php-mobile-locator) - 国内手机号归属地 & 运营商识别。
+[hejunjie/address-parser](https://github.com/zxc7563598/php-address-parser) - An intelligent address parser that extracts name, phone number, ID number, region, and detailed address from unstructured text—perfect for e-commerce, logistics, and CRM systems.
 
-[hejunjie/url-signer](https://github.com/zxc7563598/php-url-signer) - URL 签名工具，支持对 URL 进行签名和验证。
+[hejunjie/url-signer](https://github.com/zxc7563598/php-url-signer) - A PHP library for generating URLs with encryption and signature protection—useful for secure resource access and tamper-proof links.
 
-[hejunjie/google-authenticator](https://github.com/zxc7563598/php-google-authenticator) - Google Authenticator 及类似应用的密钥生成、二维码创建和 OTP 验证。
+[hejunjie/google-authenticator](https://github.com/zxc7563598/php-google-authenticator) - A PHP library for generating and verifying Time-Based One-Time Passwords (TOTP). Compatible with Google Authenticator and similar apps, with features like secret generation, QR code creation, and OTP verification.
 
-👀 所有包都遵循「轻量实用、解放双手」的原则，能单独用，也能组合用，自由度高，欢迎 star 🌟 或提 issue。
+[hejunjie/simple-rule-engine](https://github.com/zxc7563598/php-simple-rule-engine) - A lightweight and flexible PHP rule engine supporting complex conditions and dynamic rule execution—ideal for business logic evaluation and data validation.
+
+👀 All packages follow the principles of being lightweight and practical — designed to save you time and effort. They can be used individually or combined flexibly. Feel free to ⭐ star the project or open an issue anytime!
 
 ---
 
-该库后续将持续更新，添加更多实用功能。欢迎大家提供建议和反馈，我会根据大家的意见实现新的功能，共同提升开发效率。
+This library will continue to be updated with more practical features. Suggestions and feedback are always welcome — I’ll prioritize new functionality based on community input to help improve development efficiency together.

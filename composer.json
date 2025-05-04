@@ -1,6 +1,6 @@
 {
   "name": "hejunjie/simple-rule-engine",
-  "description": "一个轻量、易用的 PHP 规则引擎，支持多条件组合、动态规则执行，适合业务规则判断、数据校验等场景。",
+  "description": "A lightweight and flexible PHP rule engine supporting complex conditions and dynamic rule execution—ideal for business logic evaluation and data validation.",
   "license": "MIT",
   "type": "library",
   "autoload": {

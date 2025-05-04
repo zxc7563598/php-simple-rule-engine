@@ -106,7 +106,7 @@ You can also add custom operators through the registration mechanism.
 
 ## 🔌 Custom Operators
 
-实现 `OperatorInterface`​ 接口，并通过 `OperatorFactory`​ 注册：
+Implement the `OperatorInterface` and register through `OperatorFactory`.
 
 ```php
 use Hejunjie\SimpleRuleEngine\Interface\OperatorInterface;

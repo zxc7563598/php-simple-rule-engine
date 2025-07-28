@@ -7,6 +7,8 @@
 
 A lightweight and flexible PHP rule engine supporting complex conditions and dynamic rule execution—ideal for business logic evaluation and data validation.
 
+**This project has been parsed by Zread. If you need a quick overview of the project, you can click on the number of views to view it：[Understand this project](https://zread.ai/zxc7563598/php-simple-rule-engine)**
+
 ---
 
 ## 🧠 Purpose & Intent
